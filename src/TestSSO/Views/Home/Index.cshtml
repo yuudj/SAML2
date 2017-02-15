@@ -10,29 +10,33 @@
 </div>
 
 <div class="row">
-    @if (Request.IsAuthenticated)
-    {
-        <h2>Claims</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (Claim claim in Model.ClaimsIdentity.Claims)
-            {
-            <tr>
-                <td>@claim.Type</td>
-                <td>@claim.Value</td>
-            </tr>
-            }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <div>Not signedin.</div>
-    }
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        @if (Request.IsAuthenticated)
+        {
+            <h2>Claims</h2>
+            <table class="table table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Claim claim in Model.ClaimsIdentity.Claims)
+                    {
+                        <tr>
+                            <td>@claim.Type</td>
+                            <td>@claim.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div>Not signedin.</div>
+        }
+    </div>
+    <div class="col-md-1"></div>
 </div>

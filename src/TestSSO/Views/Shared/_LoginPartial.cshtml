@@ -2,16 +2,6 @@
 {
     <text>
         <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-text">
-                @if (User.Identity.Name != null)
-                {
-                    <text>Hello, @User.Identity.Name!</text>
-                }
-                else
-                {
-                    <text>Hello</text>
-                }
-            </li>
             <li>
                 @Html.ActionLink("Sign out", "SignOut", "Account")
             </li>
