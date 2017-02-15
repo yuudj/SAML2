@@ -63,8 +63,8 @@ namespace TestSSO
             {
                 ServiceProvider = new ServiceProvider {
                     SigningCertificate = new X509Certificate2(FileEmbeddedResource("TestSSO.sp.pfx"), "password"),
-                    Server = "https://localhost:44333/",
-                    Id = "https://localhost:44333/"
+                    Server = "https://localhost:44333",
+                    Id = "https://localhost:44333"
                 },
                 AllowedAudienceUris = new List<Uri>(new[] { new Uri("https://localhost:44333/") })
             };
@@ -82,7 +82,8 @@ namespace TestSSO
                     RedirectUrl = "/account/signout"
                 }
             });
-            if (!saml2Configuration.IdentityProviders.TryAddByMetadata("IdpMetadata.xml"))
+            // testshib-providers.xml is not supported because it contains an <EntitiesDescription> element
+            if (!saml2Configuration.IdentityProviders.TryAddByMetadata(Path.Combine(@"c:\users\anthony\source\SAML2\src\TestSSO\idpMetadata.xml")))
             {
                 throw new ArgumentException("Invalid metadata file");
             }
