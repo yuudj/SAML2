@@ -52,8 +52,8 @@ namespace TestSSO
             {
                 throw new ArgumentException("Invalid metadata file");
             }
-            saml2Configuration.IdentityProviders.First().Default = true;
-            saml2Configuration.IdentityProviders.First().OmitAssertionSignatureCheck = true; // !?
+            // I think this is a defect in the library/
+            saml2Configuration.IdentityProviders.First().OmitAssertionSignatureCheck = true;
             saml2Configuration.LoggingFactoryType = "SAML2.Logging.DebugLoggerFactory";
 
             app.UseSamlAuthentication(
