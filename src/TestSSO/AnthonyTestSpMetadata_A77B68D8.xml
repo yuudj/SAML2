@@ -19,16 +19,6 @@ See:
   <EntityDescriptor entityID="https://localhost:44338">
     <!-- eduGAIN is SAML 2.0 only -->
     <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-
-      <!--<Extensions>
-        <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol"
-                index="1" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol"
-                Location="http://sp.example.org/Shibboleth.sso/DS"/>
-        <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol"
-                index="2" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol"
-                Location="https://sp.example.org/Shibboleth.sso/DS"/>
-      </Extensions>-->
-
       <KeyDescriptor>
         <ds:KeyInfo>
           <ds:X509Data>
@@ -97,7 +87,7 @@ See:
     <Organization>
       <OrganizationName xml:lang="en">Dimension Data Group Services</OrganizationName>
       <OrganizationDisplayName xml:lang="en">Anthony Test SP</OrganizationDisplayName>
-      <OrganizationURL xml:lang="en">http://localhost:44338/</OrganizationURL>
+      <OrganizationURL xml:lang="en">http://localhost:44338</OrganizationURL>
     </Organization>
     <ContactPerson contactType="technical">
       <GivenName>Anthony</GivenName>

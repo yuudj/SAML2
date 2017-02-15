@@ -63,10 +63,10 @@ namespace TestSSO
             {
                 ServiceProvider = new ServiceProvider {
                     SigningCertificate = new X509Certificate2(FileEmbeddedResource("TestSSO.sp.pfx"), "password"),
-                    Server = "https://localhost:44333",
-                    Id = "https://localhost:44333"
+                    Server = "https://localhost:44338",
+                    Id = "https://localhost:44338"
                 },
-                AllowedAudienceUris = new List<Uri>(new[] { new Uri("https://localhost:44333/") })
+                AllowedAudienceUris = new List<Uri>(new[] { new Uri("https://localhost:44338") })
             };
             saml2Configuration.ServiceProvider.Endpoints.AddRange(new[] {
                 new ServiceProviderEndpoint
