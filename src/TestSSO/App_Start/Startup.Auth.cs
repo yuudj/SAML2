@@ -26,9 +26,11 @@ namespace TestSSO
     {
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+            app.SetDefaultSignInAsAuthenticationType(SamlAuthenticationDefaults.AuthenticationType);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                AuthenticationType = "SAML2"
+            });
 
             Saml2Configuration saml2Configuration = new Saml2Configuration
             {
@@ -54,7 +56,7 @@ namespace TestSSO
                 }
             });
             // testshib-providers.xml is not supported because it contains an <EntitiesDescription> element
-            if (!saml2Configuration.IdentityProviders.TryAddByMetadata(Path.Combine(@"c:\users\anthony\source\SAML2\src\TestSSO\idpMetadata.xml")))
+            if (!saml2Configuration.IdentityProviders.TryAddByMetadata(@"c:\users\anthony\source\SAML2\src\TestSSO\idpMetadata.xml"))
             {
                 throw new ArgumentException("Invalid metadata file");
             }
@@ -65,18 +67,19 @@ namespace TestSSO
                 new SamlAuthenticationOptions
                 {
                     Configuration = saml2Configuration,
-                    RedirectAfterLogin = "/"
+                    RedirectAfterLogin = "/",
+                    AuthenticationMode = AuthenticationMode.Active // Should capture 401 events but does not
                 });
         }
 
         private byte[] FileEmbeddedResource(string path)
         {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             var resourceName = path;
 
             byte[] result = null;
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (var memoryStream = new MemoryStream())
+            using (MemoryStream memoryStream = new MemoryStream())
             {
                 stream.CopyTo(memoryStream);
                 result = memoryStream.ToArray();
