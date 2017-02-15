@@ -29,7 +29,8 @@ namespace TestSSO
             app.SetDefaultSignInAsAuthenticationType(SamlAuthenticationDefaults.AuthenticationType);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
-                AuthenticationType = "SAML2"
+                AuthenticationType = "SAML2", // Not available as a constant, strangely
+                AuthenticationMode = AuthenticationMode.Active
             });
 
             Saml2Configuration saml2Configuration = new Saml2Configuration
@@ -52,7 +53,7 @@ namespace TestSSO
             {
                 throw new ArgumentException("Invalid metadata file");
             }
-            // I think this is a defect in the library/
+            // I think this is a defect in the library.
             saml2Configuration.IdentityProviders.First().OmitAssertionSignatureCheck = true;
             saml2Configuration.LoggingFactoryType = "SAML2.Logging.DebugLoggerFactory";
 
@@ -60,8 +61,7 @@ namespace TestSSO
                 new SamlAuthenticationOptions
                 {
                     Configuration = saml2Configuration,
-                    RedirectAfterLogin = "/",
-                    AuthenticationMode = AuthenticationMode.Active // Should capture 401 events but does not
+                    RedirectAfterLogin = "/"
                 });
         }
 

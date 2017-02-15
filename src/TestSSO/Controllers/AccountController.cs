@@ -11,16 +11,13 @@ namespace TestSSO.Controllers
 {
     public class AccountController : Controller
     {
-        [Authorize]
         public void SignIn()
         {
-            // Returning 401 does not appear to work with this library. Not critical.
-
-            //if (!Request.IsAuthenticated)
-            //{
-            //    HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/" }, 
-            //        SamlAuthenticationDefaults.AuthenticationType);
-            //}
+            if (!Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/" },
+                    "SAML2");
+            }
         }
 
         public void SignOut()
@@ -29,7 +26,7 @@ namespace TestSSO.Controllers
 
             HttpContext.GetOwinContext().Authentication.SignOut(
                 new AuthenticationProperties { RedirectUri = callbackUrl },
-                SamlAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+                "SAML2", CookieAuthenticationDefaults.AuthenticationType);
         }
 
         public ActionResult SignOutCallback()
