@@ -42,17 +42,20 @@ namespace TestSSO
                 },
                 AllowedAudienceUris = new List<Uri>(new[] { new Uri("https://localhost:44338") })
             };
+
             // These URLs are intercepted by the library and handled appropriately
             saml2Configuration.ServiceProvider.Endpoints.AddRange(new[] {
                 new ServiceProviderEndpoint(EndpointType.SignOn, "/saml2/login", "/"),
                 new ServiceProviderEndpoint(EndpointType.Logout, "/saml2/logout", "/"),
                 new ServiceProviderEndpoint(EndpointType.Metadata, "/saml2/metadata")
             });
-            // testshib-providers.xml is not supported because it contains an <EntitiesDescription> element
+
+            // testshib-providers.xml is not supported because it contains multiple <EntityDescription> elements
             if (!saml2Configuration.IdentityProviders.TryAddByMetadata(@"c:\users\anthony\source\SAML2\src\TestSSO\idpMetadata.xml"))
             {
                 throw new ArgumentException("Invalid metadata file");
             }
+
             // I think this is a defect in the library.
             saml2Configuration.IdentityProviders.First().OmitAssertionSignatureCheck = true;
             saml2Configuration.LoggingFactoryType = "SAML2.Logging.DebugLoggerFactory";

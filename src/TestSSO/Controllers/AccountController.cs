@@ -15,7 +15,8 @@ namespace TestSSO.Controllers
         {
             if (!Request.IsAuthenticated)
             {
-                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/" },
+                HttpContext.GetOwinContext().Authentication.Challenge(
+                    new AuthenticationProperties { RedirectUri = "/" },
                     "SAML2");
             }
         }
@@ -26,16 +27,18 @@ namespace TestSSO.Controllers
 
             HttpContext.GetOwinContext().Authentication.SignOut(
                 new AuthenticationProperties { RedirectUri = callbackUrl },
-                "SAML2", CookieAuthenticationDefaults.AuthenticationType);
+                "SAML2", 
+                CookieAuthenticationDefaults.AuthenticationType
+            );
         }
 
         public ActionResult SignOutCallback()
         {
-            if (Request.IsAuthenticated)
-            {
-                // Redirect to home page if the user is authenticated.
-                return RedirectToAction("Index", "Home");
-            }
+            //if (Request.IsAuthenticated)
+            //{
+            //    // Redirect to home page if the user is authenticated.
+            //    return RedirectToAction("Index", "Home");
+            //}
 
             return View();
         }
