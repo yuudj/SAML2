@@ -1,4 +1,6 @@
-﻿<!-- 
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
 WARNING: Do not rename this file. It's name is unique and is used by testshib.org.
 
 Upload changes to http://www.testshib.org/register.html. 
@@ -9,91 +11,46 @@ See:
 * https://docs.wso2.com/display/IS510/How+To%3A+Configure+Shibboleth+IdP+as+a+Trusted+Identity+Provider
 -->
 
-<EntitiesDescriptor Name="https://your-federation.org/metadata/federation-name.xml"
-    xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
-    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-    xmlns:shibmd="urn:mace:shibboleth:metadata:1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  
-  <!-- A service provider. -->
-  <EntityDescriptor entityID="https://localhost:44338">
-    <!-- eduGAIN is SAML 2.0 only -->
-    <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-      <KeyDescriptor>
-        <ds:KeyInfo>
-          <ds:X509Data>
-            <ds:X509Certificate>
-              MIIC9TCCAd2gAwIBAgIQEaikiWE7lYpMQaavURrvbDANBgkqhkiG9w0BAQsFADAS
-              MRAwDgYDVQQDEwdUZXN0IFNQMB4XDTE3MDIxMDA2MzEyNloXDTM5MTIzMTIzNTk1
-              OVowEjEQMA4GA1UEAxMHVGVzdCBTUDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
-              AQoCggEBAL3we1tcvwteKxbRSq1UlgywIvkE3C+gKZkTZQrhoSX00wfUyfASIBsO
-              +pNbawwLh21s6WoBO69Kgh+zxQTPUyfLjuhRP8TWFqZFO+Wspm7Zsdy4uwMMXhwp
-              YdZGaY9QcWFxC2GX5hXugQaDhJqviIiQu+qEnoiprIXn1sfZGP8WY8BY6VtN4w8z
-              KAGXJ7GwMHqfzp6NwoxJvc/34PpN1hB+nsfVxwyeQh4KcOpnEoWG5Wamygctp9v3
-              0vlk32m2vPkRx+1UR36Q1faxY0szfEFUimN8t7oprViiqj7DrM3T4MR8edSxnOXr
-              fxCTHZ9ua3PXK3SGGKKDgA5sbktFPUkCAwEAAaNHMEUwQwYDVR0BBDwwOoAQJB5t
-              F3jC3IVJKvhuDu4TfqEUMBIxEDAOBgNVBAMTB1Rlc3QgU1CCEBGopIlhO5WKTEGm
-              r1Ea72wwDQYJKoZIhvcNAQELBQADggEBAAI7CCgRCyId3/cehBhnG2VV3SuMb5aM
-              lHILO0bRw21iZhfZHzQg3m2QJVMRwr1lN7lLg0pfS2SzNCEgV1T0fZuvBgHpFMO8
-              +lNIAlOXAGZQaPx568q/ymVwlo75kP/PywuHOGYhyNF4V3IsWE7qhpvfN6bN6oC6
-              SdKb/pJoRakQR0D/WKwiQdxchUfSFsZDy/lrdDZdB/4h8KfK1X9an7O8ta4rbSGF
-              dNyZZ9UPMv6gCoYouOXXxN8oQaYh8gBGPdI6Wul+tTf+SxLxRaRY1+9d9ZEcgzMZ
-              axoGi2mSG0g0zUHY6BsEes2VD8HHAD561Z9hQ+gODQj7DICjqqSx6zM=
-            </ds:X509Certificate>
-          </ds:X509Data>
-        </ds:KeyInfo>
-      </KeyDescriptor>
-
-      <SingleLogoutService Location="https://localhost:44338/saml2/logout"
-        Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"/>
-      <SingleLogoutService Location="https://localhost:44338/saml2/logout"
-        Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"/>
-      <SingleLogoutService Location="https://localhost:44338/saml2/logout"
-        Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
-      <SingleLogoutService Location="https://localhost:44338/saml2/logout"
-        Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"/>
-
-      <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-
-      <!-- How attributes are received. -->
-      <AssertionConsumerService index="1" isDefault="true"
-              Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-              Location="https://localhost:44338/"/>
-      <!--<AssertionConsumerService index="2"
-              Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign"
-              Location="https://localhost:44338/SAML2/POST-SimpleSign"/>
-      <AssertionConsumerService index="3"
-              Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-              Location="https://localhost:44338/SAML2/Artifact"/>
-      <AssertionConsumerService index="4"
-              Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post"
-              Location="https://localhost:44338/SAML/POST"/>
-      <AssertionConsumerService index="5"
-              Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01"
-              Location="https://localhost:44338/SAML/Artifact"/>-->
-
-      <!-- The attributes we want to receive. -->
-      <AttributeConsumingService index="1">
-        <ServiceName xml:lang="en">Test Service</ServiceName>
-        <ServiceDescription xml:lang="en">Test service that uses the UPEN, email address and display name.</ServiceDescription>
-
-        <RequestedAttribute FriendlyName="eduPersonPrincipalName" Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-        <RequestedAttribute FriendlyName="mail" Name="urn:oid:0.9.2342.19200300.100.1.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-        <RequestedAttribute FriendlyName="displayName" Name="urn:oid:2.16.840.1.113730.3.1.241" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-      </AttributeConsumingService>
-      
-    </SPSSODescriptor>
-
-    <Organization>
-      <OrganizationName xml:lang="en">Dimension Data Group Services</OrganizationName>
-      <OrganizationDisplayName xml:lang="en">Anthony Test SP</OrganizationDisplayName>
-      <OrganizationURL xml:lang="en">http://localhost:44338</OrganizationURL>
-    </Organization>
-    <ContactPerson contactType="technical">
-      <GivenName>Anthony</GivenName>
-      <SurName>Langsworth</SurName>
-      <EmailAddress>anthony.langsworth@itaas.dimensiondata.com</EmailAddress>
-    </ContactPerson>
-
-  </EntityDescriptor>
-</EntitiesDescriptor>
+<EntityDescriptor xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" entityID="https://localhost:44338" ID="id80ad311850ca426dae74bf8f2789e4d9" validUntil="2017-02-22T05:29:34.7888723Z" xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="#id80ad311850ca426dae74bf8f2789e4d9">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+          <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>RGlu22HlJVxK1F7qmVOBQczsQbI=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>TNUnIXU8gkdGCC0F1vYi7mseGdpOjVlPaM9iTiOa71LMhJT6V1uroHubCH1UR0C1rFibIZNa2Oj9sjhS0IJXPGE3cLOMbAnrDd4eoGOb7ZwidDebBMmPvzGALQ/1cLGVDXUzw8U6w1+eC9aV6U8ScjJJ7XOLvIBwUbkc34tcjf8xvmhnOWG89qwGYF62z+aom2ImoH5306oGKnRKk6myLpXmaHQnDy7BrQafTdZtcvz23/uc0rd2sm0x1ba7NJQeqlwJ5qI076uUEvo8yhAKqhxVQj7ZhdXqZMC9m/7rh6nUBFUMANSPiksj/9Cnks5woGe1akzj/NA7vOzLLsV2CQ==</SignatureValue>
+    <KeyInfo>
+      <X509Data>
+        <X509Certificate>MIIC9TCCAd2gAwIBAgIQEaikiWE7lYpMQaavURrvbDANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDEwdUZXN0IFNQMB4XDTE3MDIxMDA2MzEyNloXDTM5MTIzMTIzNTk1OVowEjEQMA4GA1UEAxMHVGVzdCBTUDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL3we1tcvwteKxbRSq1UlgywIvkE3C+gKZkTZQrhoSX00wfUyfASIBsO+pNbawwLh21s6WoBO69Kgh+zxQTPUyfLjuhRP8TWFqZFO+Wspm7Zsdy4uwMMXhwpYdZGaY9QcWFxC2GX5hXugQaDhJqviIiQu+qEnoiprIXn1sfZGP8WY8BY6VtN4w8zKAGXJ7GwMHqfzp6NwoxJvc/34PpN1hB+nsfVxwyeQh4KcOpnEoWG5Wamygctp9v30vlk32m2vPkRx+1UR36Q1faxY0szfEFUimN8t7oprViiqj7DrM3T4MR8edSxnOXrfxCTHZ9ua3PXK3SGGKKDgA5sbktFPUkCAwEAAaNHMEUwQwYDVR0BBDwwOoAQJB5tF3jC3IVJKvhuDu4TfqEUMBIxEDAOBgNVBAMTB1Rlc3QgU1CCEBGopIlhO5WKTEGmr1Ea72wwDQYJKoZIhvcNAQELBQADggEBAAI7CCgRCyId3/cehBhnG2VV3SuMb5aMlHILO0bRw21iZhfZHzQg3m2QJVMRwr1lN7lLg0pfS2SzNCEgV1T0fZuvBgHpFMO8+lNIAlOXAGZQaPx568q/ymVwlo75kP/PywuHOGYhyNF4V3IsWE7qhpvfN6bN6oC6SdKb/pJoRakQR0D/WKwiQdxchUfSFsZDy/lrdDZdB/4h8KfK1X9an7O8ta4rbSGFdNyZZ9UPMv6gCoYouOXXxN8oQaYh8gBGPdI6Wul+tTf+SxLxRaRY1+9d9ZEcgzMZaxoGi2mSG0g0zUHY6BsEes2VD8HHAD561Z9hQ+gODQj7DICjqqSx6zM=</X509Certificate>
+      </X509Data>
+    </KeyInfo>
+  </Signature>
+  <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" AuthnRequestsSigned="true" WantAssertionsSigned="true">
+    <KeyDescriptor use="signing">
+      <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <X509Data>
+          <X509Certificate>MIIC9TCCAd2gAwIBAgIQEaikiWE7lYpMQaavURrvbDANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDEwdUZXN0IFNQMB4XDTE3MDIxMDA2MzEyNloXDTM5MTIzMTIzNTk1OVowEjEQMA4GA1UEAxMHVGVzdCBTUDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL3we1tcvwteKxbRSq1UlgywIvkE3C+gKZkTZQrhoSX00wfUyfASIBsO+pNbawwLh21s6WoBO69Kgh+zxQTPUyfLjuhRP8TWFqZFO+Wspm7Zsdy4uwMMXhwpYdZGaY9QcWFxC2GX5hXugQaDhJqviIiQu+qEnoiprIXn1sfZGP8WY8BY6VtN4w8zKAGXJ7GwMHqfzp6NwoxJvc/34PpN1hB+nsfVxwyeQh4KcOpnEoWG5Wamygctp9v30vlk32m2vPkRx+1UR36Q1faxY0szfEFUimN8t7oprViiqj7DrM3T4MR8edSxnOXrfxCTHZ9ua3PXK3SGGKKDgA5sbktFPUkCAwEAAaNHMEUwQwYDVR0BBDwwOoAQJB5tF3jC3IVJKvhuDu4TfqEUMBIxEDAOBgNVBAMTB1Rlc3QgU1CCEBGopIlhO5WKTEGmr1Ea72wwDQYJKoZIhvcNAQELBQADggEBAAI7CCgRCyId3/cehBhnG2VV3SuMb5aMlHILO0bRw21iZhfZHzQg3m2QJVMRwr1lN7lLg0pfS2SzNCEgV1T0fZuvBgHpFMO8+lNIAlOXAGZQaPx568q/ymVwlo75kP/PywuHOGYhyNF4V3IsWE7qhpvfN6bN6oC6SdKb/pJoRakQR0D/WKwiQdxchUfSFsZDy/lrdDZdB/4h8KfK1X9an7O8ta4rbSGFdNyZZ9UPMv6gCoYouOXXxN8oQaYh8gBGPdI6Wul+tTf+SxLxRaRY1+9d9ZEcgzMZaxoGi2mSG0g0zUHY6BsEes2VD8HHAD561Z9hQ+gODQj7DICjqqSx6zM=</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </KeyDescriptor>
+    <KeyDescriptor use="encryption">
+      <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <X509Data>
+          <X509Certificate>MIIC9TCCAd2gAwIBAgIQEaikiWE7lYpMQaavURrvbDANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDEwdUZXN0IFNQMB4XDTE3MDIxMDA2MzEyNloXDTM5MTIzMTIzNTk1OVowEjEQMA4GA1UEAxMHVGVzdCBTUDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL3we1tcvwteKxbRSq1UlgywIvkE3C+gKZkTZQrhoSX00wfUyfASIBsO+pNbawwLh21s6WoBO69Kgh+zxQTPUyfLjuhRP8TWFqZFO+Wspm7Zsdy4uwMMXhwpYdZGaY9QcWFxC2GX5hXugQaDhJqviIiQu+qEnoiprIXn1sfZGP8WY8BY6VtN4w8zKAGXJ7GwMHqfzp6NwoxJvc/34PpN1hB+nsfVxwyeQh4KcOpnEoWG5Wamygctp9v30vlk32m2vPkRx+1UR36Q1faxY0szfEFUimN8t7oprViiqj7DrM3T4MR8edSxnOXrfxCTHZ9ua3PXK3SGGKKDgA5sbktFPUkCAwEAAaNHMEUwQwYDVR0BBDwwOoAQJB5tF3jC3IVJKvhuDu4TfqEUMBIxEDAOBgNVBAMTB1Rlc3QgU1CCEBGopIlhO5WKTEGmr1Ea72wwDQYJKoZIhvcNAQELBQADggEBAAI7CCgRCyId3/cehBhnG2VV3SuMb5aMlHILO0bRw21iZhfZHzQg3m2QJVMRwr1lN7lLg0pfS2SzNCEgV1T0fZuvBgHpFMO8+lNIAlOXAGZQaPx568q/ymVwlo75kP/PywuHOGYhyNF4V3IsWE7qhpvfN6bN6oC6SdKb/pJoRakQR0D/WKwiQdxchUfSFsZDy/lrdDZdB/4h8KfK1X9an7O8ta4rbSGFdNyZZ9UPMv6gCoYouOXXxN8oQaYh8gBGPdI6Wul+tTf+SxLxRaRY1+9d9ZEcgzMZaxoGi2mSG0g0zUHY6BsEes2VD8HHAD561Z9hQ+gODQj7DICjqqSx6zM=</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </KeyDescriptor>
+    <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://localhost:44338/saml2/login" index="0" />
+    <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://localhost:44338/saml2/logout" index="0" />
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://localhost:44338/saml2/logout" ResponseLocation="https://localhost:44338/saml2/logout" />
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://localhost:44338/saml2/logout" ResponseLocation="https://localhost:44338/saml2/logout" />
+    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://localhost:44338/saml2/login" index="0" isDefault="true" />
+  </SPSSODescriptor>
+</EntityDescriptor>
