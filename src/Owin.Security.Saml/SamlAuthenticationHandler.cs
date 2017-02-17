@@ -68,6 +68,11 @@ namespace Owin.Security.Saml
 
             if (!notification.HandledResponse)
             {
+                //string redirectUri = notification.ProtocolMessage.BuildRedirectUrl();
+                //if (!Uri.IsWellFormedUriString(redirectUri, UriKind.Absolute))
+                //{
+                //    _logger.WriteWarning("The sign-out redirect URI is malformed: " + redirectUri);
+                //}
                 Response.Redirect(SamlMessage.Reply);
             }
         }
