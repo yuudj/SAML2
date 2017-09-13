@@ -8,7 +8,7 @@ namespace SelfHostOwinSPExample
         private static void Main(string[] args)
         {
             Console.Title = "SelfHost Sample";
-            var url = "https://localhost:44333/core";
+            var url = "http://localhost:7777/identity";
 #if TEST
             url = "http://localhost:7777/identity";
 #endif

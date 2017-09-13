@@ -151,6 +151,7 @@
     <Compile Include="Schema\Core\SubjectLocality.cs" />
     <Compile Include="Schema\Metadata\AdditionalMetadataLocation.cs" />
     <Compile Include="Schema\Metadata\AffiliationDescriptor.cs" />
+    <Compile Include="Schema\Metadata\ApplicationServiceTypeDescriptor.cs" />
     <Compile Include="Schema\Metadata\AttributeAuthorityDescriptor.cs" />
     <Compile Include="Schema\Metadata\AttributeConsumingService.cs" />
     <Compile Include="Schema\Metadata\AuthnAuthorityDescriptor.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Schema\Metadata\PdpDescriptor.cs" />
     <Compile Include="Schema\Metadata\RequestedAttribute.cs" />
     <Compile Include="Schema\Metadata\RoleDescriptor.cs" />
+    <Compile Include="Schema\Metadata\SecurityTokenServiceTypeDescriptor.cs" />
     <Compile Include="Schema\Metadata\SpSsoDescriptor.cs" />
     <Compile Include="Schema\Metadata\SsoDescriptor.cs" />
     <Compile Include="Schema\Protocol\ArtifactResolve.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Schema\XmlDSig\CanonicalizationMethod.cs" />
     <Compile Include="Schema\XmlDSig\DigestMethod.cs" />
     <Compile Include="Schema\XmlDSig\DsaKeyValue.cs" />
+    <Compile Include="Schema\XmlDSig\KeyInfoClause.cs" />
     <Compile Include="Schema\XmlDSig\KeyInfoItemType.cs" />
     <Compile Include="Schema\XmlDSig\KeyInfo.cs" />
     <Compile Include="Schema\XmlDSig\KeyValue.cs" />
