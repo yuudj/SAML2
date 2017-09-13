@@ -7,7 +7,8 @@ using SAML2.Logging;
 using Microsoft.Owin.Security;
 using Owin.Security.Saml;
 using System.Collections.Generic;
-//using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
+using System.Web.Http;
+using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 //using System.Threading.Tasks;
 //using System.Collections.Generic;
 
@@ -17,26 +18,27 @@ namespace SelfHostOwinSPExample
     {
         public void Configuration(IAppBuilder appBuilder)
         {
-            var config = GetSamlConfigurationPQS();
-#if TEST
-            config = TestEnvironmentConfiguration();
-#endif
+            var config = GetSamlConfiguration();
+
+            //In OWIN selfhost environment, Request.Body is using HttpRequestStream that is not rewindable, it is causing issues for other components in pipeline trying to access the body content.
             appBuilder.Use<SeekableRequestBodyMiddleware>();
-
-
 
             appBuilder.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions
             {
                 AuthenticationType = "SAML2",
                 AuthenticationMode = Microsoft.Owin.Security.AuthenticationMode.Active
             });
-            appBuilder.UseSamlAuthentication(new Owin.Security.Saml.SamlAuthenticationOptions
+            appBuilder.UseSamlAuthentication(new SamlAuthenticationOptions
             {
                 Configuration = config,
                 RedirectAfterLogin = "/core",
                 LoginPath = "/identity/login",
 
             });
+
+            appBuilder.UseWebApi(GetWebApiConfig());
+
+            
             appBuilder.Run(async c =>
             {
                 if (c.Authentication.User != null &&
@@ -56,47 +58,15 @@ namespace SelfHostOwinSPExample
                 }
                 return;
             });
+
         }
+
+
 
         private Saml2Configuration GetSamlConfiguration()
         {
-            var myconfig = new Saml2Configuration
-            {
-                ServiceProvider = new ServiceProvider
-                {
-                    SigningCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(FileEmbeddedResource("SelfHostOwinSPExample.sts_dev_certificate.pfx"), "test1234", System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.MachineKeySet),
-                    Server = "https://localhost:44333/core",
-                    Id = "https://www.testsamlgithub.com"
-                },
-                AllowedAudienceUris = new System.Collections.Generic.List<Uri>(new[] { new Uri("https://www.testsamlgithub.com") })
-            };
-            myconfig.ServiceProvider.Endpoints.AddRange(new[] {
-                new ServiceProviderEndpoint(EndpointType.SignOn, "/core/saml2/login", "/core"),
-                new ServiceProviderEndpoint(EndpointType.Logout, "/core/saml2/logout", "/core"),
-                new ServiceProviderEndpoint(EndpointType.Metadata, "/core/saml2/metadata")
-            });
-            myconfig.IdentityProviders.AddByMetadataDirectory("..\\..\\Metadata");
-            
-
-            //myconfig.IdentityProviders.AddByMetadataUrl(new Uri("https://tas.fhict.nl/identity/saml2/metadata"));
-            myconfig.IdentityProviders.First().OmitAssertionSignatureCheck = true;
-            myconfig.LoggingFactoryType = "SAML2.Logging.DebugLoggerFactory";
-            return myconfig;
-        }
-
-        private Saml2Configuration GetSamlConfigurationPQS()
-        {
-            //var parrCert = CertificateHelper.GetBytesFromPEM(@"C:\WorkingFolder\tmp\saml-idp\idp-public-cert.pem", "CERTIFICATE");
-
-            //linea de comandos para generar esto openssl pkcs12 -export -in idp-public-cert.pem -inkey idp-private-key.pem -out mycert.pfx
-            //necesitar tener dos pems
-
-            //System.Security.Cryptography.X509Certificates.X509Certificate2 cert = new System.Security.Cryptography.X509Certificates.X509Certificate2(parrCert);
+            // TODO: ADD A CERTIFICATE HERE
             System.Security.Cryptography.X509Certificates.X509Certificate2 cert = new System.Security.Cryptography.X509Certificates.X509Certificate2(@"C:\WorkingFolder\tmp\saml-idp\mycert.pfx", "fruta");
-
-            if (!cert.HasPrivateKey)
-                Console.WriteLine("El certificado no sirve, necesita clave privada");
-
 
             var myconfig = new Saml2Configuration
             {
@@ -109,7 +79,7 @@ namespace SelfHostOwinSPExample
                 LoggingFactoryType = typeof(LoggingFactory).AssemblyQualifiedName,
                 AllowedAudienceUris = new List<Uri>
                                               {
-                                                  new Uri("uri:pqs")
+                                                  new Uri("uri:pqs")// this must mathc with the IDP configuration
                                               }
 
             };
@@ -122,28 +92,23 @@ namespace SelfHostOwinSPExample
             });
 
 
-            myconfig.IdentityProviders.AddByMetadata(new string[] { @"c:\users\rbrea\documents\visual studio 2015\Projects\LPM1\LPM1\idp.metadata.xml" });
+
+            myconfig.IdentityProviders.AddByMetadata(new string[] { @"Metadata/idp.metadata.xml" });
+
             myconfig.IdentityProviders[0].OmitAssertionSignatureCheck = true;
             SAML2.Logging.LoggerProvider.Configuration = myconfig;
             return myconfig;
         }
-
-
-
-        private byte[] FileEmbeddedResource(string path)
-        {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var resourceName = path;
-
-            byte[] result = null;
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                result = memoryStream.ToArray();
-            }
-            return result;
+        private HttpConfiguration GetWebApiConfig() {
+            HttpConfiguration config = new HttpConfiguration();
+            config.MapHttpAttributeRoutes();
+            return config;
         }
+
+
+        /// <summary>
+        /// Console loguer for the SP
+        /// </summary>
         public class LoggingFactory : ILoggerFactory
         {
             private static readonly IInternalLogger debugLogger = new DebugLogger();

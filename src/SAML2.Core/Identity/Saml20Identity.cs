@@ -47,6 +47,7 @@ namespace SAML2.Identity
 
                 _attributes[att.Name].Add(att);
             }
+            
         }
 
         /// <summary>
@@ -124,9 +125,10 @@ namespace SAML2.Identity
                 subjectIdentifier = point.PersistentPseudonym.GetMapper().MapIdentity(assertion.Subject);
             }
 
+            
             // Create identity
-            var identity = new Saml20Identity(subjectIdentifier, assertion.Attributes, isPersistentPseudonym ? assertion.Subject.Value : null);                        
-
+            var identity = new Saml20Identity(subjectIdentifier, assertion.Attributes, isPersistentPseudonym ? assertion.Subject.Value : null);
+            
             return new GenericPrincipal(identity, new string[] { });
         }
 
